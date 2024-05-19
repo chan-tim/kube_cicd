@@ -1,0 +1,31 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build Docker Image
+        run: docker build . -t chantim/gcr.io-k8s-minikube-kicbase:v0.0.44
+
+      - name: Push Docker Image
+        run: docker push chantim/gcr.io-k8s-minikube-kicbase:v0.0.44
+
+      # Add more steps for testing, linting, etc.
+
+      - name: Deploy to Minikube
+        uses: appleboy/kube-deploy@v2
+        with:
+          kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
+          config-file-path: deployment.yaml
