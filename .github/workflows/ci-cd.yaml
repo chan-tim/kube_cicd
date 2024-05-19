@@ -23,9 +23,9 @@ jobs:
         run: docker push chantim/gcr.io-k8s-minikube-kicbase:v0.0.44
 
       # Add more steps for testing, linting, etc.
+      # practicing rebasing again, testing     
 
       - name: Deploy to Minikube
         run: kubectl apply -f deployment.yaml
-        with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
-          config-file-path: deployment.yaml
+        env:
+          KUBECONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
