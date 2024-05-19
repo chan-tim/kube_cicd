@@ -25,7 +25,7 @@ jobs:
       # Add more steps for testing, linting, etc.
 
       - name: Deploy to Minikube
-        uses: appleboy/kube-deploy@v2
-        with:
+        run: kubectl apply -f deployment.yaml
+	with:
           kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
           config-file-path: deployment.yaml
