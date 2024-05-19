@@ -26,6 +26,6 @@ jobs:
 
       - name: Deploy to Minikube
         run: kubectl apply -f deployment.yaml
-	with:
+        with:
           kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
           config-file-path: deployment.yaml
