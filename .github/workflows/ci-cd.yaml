@@ -19,13 +19,12 @@ jobs:
       - name: Build Docker Image
         run: docker build . -t chantim/gcr.io-k8s-minikube-kicbase:v0.0.44
 
-      - name: Push Docker Image
-        run: docker push chantim/gcr.io-k8s-minikube-kicbase:v0.0.44
-
       # Add more steps for testing, linting, etc.
-      # practicing rebasing again, testing     
+      # praciticng rebasing, adding random line comment
 
-      - name: Deploy to Minikube
-        run: kubectl apply -f deployment.yaml
-        env:
-          KUBECONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
+      - name: Load Docker Image into Minikube
+        run: |
+          eval $(minikube docker-env)
+          docker save chantim/gcr.io-k8s-minikube-kicbase:v0.0.44 > image.tar
+          docker load < image.tar
+
